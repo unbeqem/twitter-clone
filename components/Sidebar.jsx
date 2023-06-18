@@ -1,17 +1,35 @@
+import { signOutUser } from "@/redux/userSlice";
 import {
   HomeIcon,
   HashtagIcon,
   InboxIcon,
   BookmarkIcon,
-  ClipboardListIcon,
   BellIcon,
   UserIcon,
-  DotsCircleHorizontalIcon
+  DotsCircleHorizontalIcon,
+  DotsHorizontalIcon
 } from "@heroicons/react/outline";
 import Image from "next/image"
+import { signOut } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "@/firebase";
+import { closeLoginModal, closeSignupModal } from "@/redux/modalSlice";
 
 
 export default function Sidebar() {
+
+  const user = useSelector(state => state.user)
+
+  const dispatch = useDispatch()
+
+ async function handleSignOut() {
+    
+    await signOut(auth)
+    dispatch(signOutUser())
+    dispatch(closeSignupModal())
+    dispatch(closeLoginModal())
+    
+  }
   return (
     <>
     <div className="h-full hidden sm:flex flex-col fixed xl:ml-24">
@@ -31,7 +49,22 @@ export default function Sidebar() {
         h-[52px] mt-2 w-[200px] text-lg font-bold">
           Tweet
         </button>
-        <div className="absolute bottom-0">User</div>
+        <div 
+        onClick={handleSignOut}
+        
+        className="
+        bottom-0
+        hover:bg-white hover:bg-opacity-10 rounded-full
+        cursor-pointer absolute xl:p-3 flex justify-center items-center space-x-3">
+        <img 
+        className="w-10 h-10 rounded-full object-cover"
+        src={user.photoUrl || "/assets/kylie.png"} alt="" />
+        <div className="hidden xl:inline">
+          <h1 className="font-bold whitespace-nowrap">{user.name}</h1>
+          <h1 className="text-gray-500">@{user.username}</h1>
+        </div>
+        <DotsHorizontalIcon className="h-5 hidden xl:inline" />
+        </div>
 </nav>
       
     </div>
