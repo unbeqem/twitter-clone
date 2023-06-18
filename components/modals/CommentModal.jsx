@@ -8,7 +8,7 @@ import {
   PhotographIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { Modal } from "@mui/material";
+import Modal from "@mui/material/Modal"
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useState } from "react";
