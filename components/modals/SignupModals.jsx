@@ -1,5 +1,5 @@
 import { closeSignupModal, openSignupModal } from "@/redux/modalSlice";
-import Modal from "@mui/material/modal";
+import { Modal } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createUserWithEmailAndPassword,
